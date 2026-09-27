@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Surprise For You ❤️</title>
+  <style>
+    :root {
+      --bg-color: #ffe6e9;
+      --card-bg: #ffffff;
+      --accent: #ff4b72;
+      --text: #2c2c2c;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    h1, h2 {
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .btn {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+
+    .btn:hover {
+      background-color: #e03a5f;
+    }
+
+    /* Music Player Controls */
+    .music-container {
+      background: #fff0f3;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ffd1dc;
+    }
+
+    .music-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* MCQ Styling */
+    .option-btn {
+      background-color: #f8f9fa;
+      border: 2px solid #ffd1dc;
+      color: var(--text);
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover {
+      background-color: #ffe6e9;
+    }
+
+    .selected-correct {
+      background-color: #d4edda !important;
+      border-color: #c3e6cb !important;
+      color: #155724;
+    }
+
+    .selected-wrong {
+      background-color: #f8d7da !important;
+      border-color: #f5c6cb !important;
+      color: #721c24;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .heart-bg {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Music Player Header -->
+    <div class="music-container">
+      <p style="margin: 0 0 10px 0; font-weight: bold;">🎵 Play Something Special</p>
+      <button class="music-btn" onclick="toggleAudio()">▶️ Play "Arz Kiya Hai"</button>
+      <audio id="bg-audio" loop>
+        <!-- Standard YouTube/Audio link placeholder for Arz Kiya Hai -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <!-- Screen 1: Welcome & Miss You Message -->
+    <div id="screen-welcome">
+      <div class="heart-bg">❤️</div>
+      <h1>I Miss You So Much!</h1>
+      <p>Every single moment without you feels a little incomplete. I made a tiny fun quiz just for you to test how well you know me!</p>
+      <button class="btn" onclick="startQuiz()">Start Quiz ✨</button>
+    </div>
+
+    <!-- Screen 2: MCQ Quiz -->
+    <div id="screen-quiz" class="hidden">
+      <h2 id="question-text">Question Here</h2>
+      <div id="options-container"></div>
+      <p id="feedback"></p>
+      <button id="next-btn" class="btn hidden" onclick="nextQuestion()">Next Question ➔</button>
+    </div>
+
+    <!-- Screen 3: Final Message -->
+    <div id="screen-final" class="hidden">
+      <div class="heart-bg">💖</div>
+      <h1>I Love You!</h1>
+      <p id="score-text"></p>
+      <p>No matter the distance or how busy life gets, you are always on my mind. I miss you and I can't wait to see you soon! 💕</p>
+    </div>
+
+  </div>
+
+  <script>
+    // Audio Player Toggle
+    const audio = document.getElementById('bg-audio');
+    const musicBtn = document.querySelector('.music-btn');
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        musicBtn.textContent = '⏸️ Pause "Arz Kiya Hai"';
+      } else {
+        audio.pause();
+        musicBtn.textContent = '▶️ Play "Arz Kiya Hai"';
+      }
+    }
+
+    // MCQ Questions Data
+    const quizData = [
+      {
+        question: "What is my absolute favorite thing about you?",
+        options: ["Your smile", "Your sense of humor", "Everything about you", "Your kindness"],
+        answer: 2 // Index of correct option
+      },
+      {
+        question: "When do I miss you the most?",
+        options: ["In the morning", "At night", "When I'm free", "24/7 constantly"],
+        answer: 3
+      },
+      {
+        question: "What is my favorite way to spend time with you?",
+        options: ["Talking for hours", "Going on long walks", "Listening to music together", "All of the above"],
+        answer: 3
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startQuiz() {
+      document.getElementById('screen-welcome').classList.add('hidden');
+      document.getElementById('screen-quiz').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const current = quizData[currentQuestionIndex];
+      document.getElementById('question-text').textContent = current.question;
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('next-btn').classList.add('hidden');
+
+      current.options.forEach((opt, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.textContent = opt;
+        button.onclick = () => selectOption(index, current.answer, button);
+        optionsContainer.appendChild(button);
+      });
+    }
+
+    function selectOption(selectedIndex, correctIndex, button) {
+      const allButtons = document.querySelectorAll('.option-btn');
+      allButtons.forEach(btn => btn.disabled = true);
+
+      if (selectedIndex === correctIndex) {
+        button.classList.add('selected-correct');
+        document.getElementById('feedback').textContent = "Correct! You know me so well 💕";
+        score++;
+      } else {
+        button.classList.add('selected-wrong');
+        allButtons[correctIndex].classList.add('selected-correct');
+        document.getElementById('feedback').textContent = "Aww, close enough! ❤️";
+      }
+
+      document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < quizData.length) {
+        loadQuestion();
+      } else {
+        showFinalScreen();
+      }
+    }
+
+    function showFinalScreen() {
+      document.getElementById('screen-quiz').classList.add('hidden');
+      document.getElementById('screen-final').classList.remove('hidden');
+      document.getElementById('score-text').textContent = `You scored ${score}/${quizData.length}! But you always win my heart anyway.`;
+    }
+  </script>
+</body>
+</html>
